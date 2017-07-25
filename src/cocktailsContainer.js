@@ -17,11 +17,9 @@ class CocktailsContainer extends Component {
   }
 
   componentDidMount() {
-    let that = this
     fetch('http://localhost:3000/api/v1/cocktails.json')
       .then(res => res.json())
       .then(data =>{
-        console.log("fetching", this)
         this.setState({
           cocktails: data
         })})
@@ -35,7 +33,6 @@ class CocktailsContainer extends Component {
   }
 
   render() {
-    console.log("rendering", this.state.cocktails)
     return(
       <div>
       <Route path='/cocktails/new' component={CreateCocktail} />

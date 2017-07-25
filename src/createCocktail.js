@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Form, Grid } from 'semantic-ui-react'
+import { Button, Form, Grid, Dropdown, Icon } from 'semantic-ui-react'
 
 class CreateCocktail extends Component {
   constructor(){
@@ -8,8 +8,17 @@ class CreateCocktail extends Component {
     this.state = {
       name: '',
       description: '',
-      instructions: ''
+      instructions: '',
+      ingredients: [],
+      proportions: {amount: '', ingredient_name: ''}
+
     }
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:3000/api/v1/ingredients.json')
+    .then(response => response.json())
+    .then(ingredients => this.setState({ ingredients }) )
   }
 
   handleChangeName = (event) => (
@@ -32,7 +41,8 @@ class CreateCocktail extends Component {
       body: JSON.stringify({
         name: this.state.name,
         description: this.state.description,
-        instructions: this.state.instructions
+        instructions: this.state.instructions,
+        proportions: [ this.state.proportions ]
       })
     })
     .then(response => response.json())
@@ -40,6 +50,7 @@ class CreateCocktail extends Component {
   )
 
   render(){
+    const ingredientsOptions = this.state.ingredients.map(ing => ({ value: ing.name, text: ing.name, id: ing.id }) )
     return(
       <div>
         <h2>Create New Cocktail</h2>
@@ -52,7 +63,16 @@ class CreateCocktail extends Component {
               </Form.Field>
               <Form.TextArea label='Description' onChange={this.handleChangeDescription} placeholder='Describe your cocktail.' />
               <Form.TextArea label='Instructions' onChange={this.handleChangeInstructions} placeholder='Tell us how you make your cocktail.' />
-              <Button type='submit'>Create</Button>
+              <Form.Field>
+                <label>Ingredients</label>
+                <input type='text' placeholder="Amount" onChange={this.handleChangeAmount} />
+              </Form.Field>
+              <Dropdown placeholder='Select Ingredients' onChange={this.handleChangeIngredient} fluid search selection options={ingredientsOptions} />
+              <Button icon onClick={this.handleProportion}>
+                <Icon name='plus' />
+              </Button>
+              <br/><br/>
+              <Button primary size='big' type='submit'>Create</Button>
             </Form>
           </Grid.Column>
         </Grid>
