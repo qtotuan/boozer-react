@@ -38,13 +38,15 @@ class CocktailsContainer extends Component {
     console.log("rendering", this.state.cocktails)
     return(
       <div>
-        <Route path='/cocktails/new' component={CreateCocktail} />
+      <Route path='/cocktails/new' component={CreateCocktail} />
+      <Grid>
+        <Route path='/cocktails' render={ () => (
+          <List cocktails={this.state.cocktails} changeCocktail={this.changeCocktail.bind(this)} />
+        )} />
         <Route path='/cocktails/:id' render={ () => (
           <ShowCocktail cocktail={this.state.currentCocktail} />
-            )} />
-        <Route exact path='/cocktails' render={ () => (
-          <List cocktails={this.state.cocktails} changeCocktail={this.changeCocktail.bind(this)} />
-            )} />
+        )} />
+      </Grid>
       </div>
     )
   }

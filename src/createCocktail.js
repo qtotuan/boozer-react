@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button, Form, Grid } from 'semantic-ui-react'
 
 class CreateCocktail extends Component {
   constructor(){
@@ -41,16 +42,20 @@ class CreateCocktail extends Component {
   render(){
     return(
       <div>
-        <h2>Create a New Cocktail</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>Name</label>
-          <input type='text' onChange={this.handleChangeName}/><br></br>
-          <label>Description</label>
-          <input type='text' onChange={this.handleChangeDescription}/><br></br>
-          <label>Instructions</label>
-          <input type='text' onChange={this.handleChangeInstructions}/><br></br>
-          <input type='submit' value='Create' />
-        </form>
+        <h2>Create New Cocktail</h2>
+        <Grid centered columns={2}>
+          <Grid.Column>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Field>
+                <label>Name</label>
+                <input type='text' onChange={this.handleChangeName}/>
+              </Form.Field>
+              <Form.TextArea label='Description' onChange={this.handleChangeDescription} placeholder='Describe your cocktail.' />
+              <Form.TextArea label='Instructions' onChange={this.handleChangeInstructions} placeholder='Tell us how you make your cocktail.' />
+              <Button type='submit'>Create</Button>
+            </Form>
+          </Grid.Column>
+        </Grid>
       </div>
     )
   }

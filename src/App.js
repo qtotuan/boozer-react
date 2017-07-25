@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import CocktailsContainer from './cocktailsContainer'
+import NavBar from './navBar'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends Component {
@@ -10,6 +10,7 @@ class App extends Component {
       <div className="App">
         <Router>
           <div>
+            <Route path='/' component={NavBar} />
             <Route path='/' component={CocktailsContainer} />
           </div>
         </Router>
